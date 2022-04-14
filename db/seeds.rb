@@ -12,7 +12,14 @@ puts "Creating restaurants..."
   name = Faker::Restaurant.name
   address = Faker::Address.street_address
   category = ["chinese", "italian", "japanese", "french", "belgian"].sample(1)
-  phone = Faker::PhoneNumber
+  phone = Faker::PhoneNumber.cell_phone
+  p new_restaurant = Restaurant.create!(name: name, address: address, category:category[0], phone_number:phone)
 
-p Restaurant.new(name: name, address: address, category:category, phone_number:phone)
+
+    3.times do
+      content = Faker::Restaurant.review
+      id = new_restaurant.id
+      rating = rand(6)
+      p Review.create!(content: content, restaurant_id: id, rating: rating)
+    end
 end
